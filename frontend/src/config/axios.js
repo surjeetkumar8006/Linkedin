@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const clientServer = axios.create({
-  baseURL: 'http://localhost:9090', 
+  baseURL: 'https://linkedin-10-6nhk.onrender.com/', 
   headers: {
     'Content-Type': 'application/json',
   },
