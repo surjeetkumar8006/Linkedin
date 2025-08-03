@@ -6,7 +6,7 @@
     "dev": "nodemon server.js",
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prod":"node server.js"
+    "prod": "node server.js"
   },
   "author": "Er. Surjeet Kumar",
   "license": "ISC",

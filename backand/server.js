@@ -25,12 +25,10 @@ app.use(express.urlencoded({ extended: true }));
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000"; // Change this to your frontend URL
 
 app.use(cors({
-  origin: FRONTEND_URL,     // restrict to frontend url
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true          // important for cookies/session sharing
+  origin: ['http://localhost:3000', 'https://linkedin-5-1w5c.onrender.com'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
 }));
-
 // Other middlewares
 app.use(methodOverride("_method"));
 app.use(cookieParser());
@@ -63,8 +61,8 @@ mongoose.connect(MONGO_URL, {
 .catch((err) => console.error("❌ MongoDB Error:", err));
 
 // Routes
-app.use("/api/posts", postRoute);
-app.use("/api/users", userRoutes);
+app.use(postRoute);
+app.use(userRoutes);
 
 // Welcome Route
 app.get("/", (req, res) => {
@@ -78,7 +76,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start Server
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 9090;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

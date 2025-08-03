@@ -1,34 +1,26 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import clientServer from '../../../axios.js'; // Correct import for axios
+import clientServer from '@/config/axios'; // Ensure this points to baseURL: http://localhost:8080
 
 // ----------------- LOGIN -----------------
 export const loginUser = createAsyncThunk(
-  '/login',
+  'auth/login',
   async (user, thunkAPI) => {
     try {
-      console.log("Sending login data", { email: user.email, password: user.password });
-
-      const response = await clientServer.post('/api/users/login', {
+      const response = await clientServer.post('/login', {
         email: user.email,
         password: user.password,
       });
 
-      console.log("Login response:", response);
-
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
-        console.log("Token saved to localStorage:", localStorage.getItem('token'));
-        
-        // Returning both token and user data
         return thunkAPI.fulfillWithValue({
           token: response.data.token,
-          user: response.data.user, // Assuming the user data is in response.data.user
+          user: response.data.user,
         });
       } else {
         return thunkAPI.rejectWithValue({ message: 'Token not found' });
       }
     } catch (error) {
-      console.log("Error in login:", error.response ? error.response.data : error.message);
       return thunkAPI.rejectWithValue(
         error.response?.data || { message: 'Something went wrong' }
       );
@@ -38,29 +30,24 @@ export const loginUser = createAsyncThunk(
 
 // ----------------- REGISTER -----------------
 export const registerUser = createAsyncThunk(
-  '/register',
+  'auth/register',
   async (user, thunkAPI) => {
     try {
-      const response = await clientServer.post('/api/users/register', {
+      const response = await clientServer.post('/register', {
         name: user.fullName,
         email: user.email,
         password: user.password,
         username: user.username,
       });
 
-      if (response.data && response.data.success) {
+      if (response.data.message === 'User registered successfully') {
         return thunkAPI.fulfillWithValue(response.data);
       } else {
         return thunkAPI.rejectWithValue({
-          message: response.data.message || 'Registration failed. Please try again.',
+          message: response.data.message || 'Registration failed',
         });
       }
     } catch (error) {
-      if (error.response?.status === 409) {
-        return thunkAPI.rejectWithValue({
-          message: 'Email or Username already exists. Please choose another one.',
-        });
-      }
       return thunkAPI.rejectWithValue({
         message: error.response?.data.message || 'Something went wrong during registration.',
       });
@@ -80,7 +67,7 @@ export const getUserProfile = createAsyncThunk(
       }
 
       // Pass token as a query parameter
-      const response = await clientServer.get("/api/user/get_all_user_profile");
+      const response = await clientServer.get("user/get_all_user_profile");
 
       return response.data;
     } catch (error) {

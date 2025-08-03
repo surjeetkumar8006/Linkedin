@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const clientServer = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://linkedin-2-222u.onrender.com/',
+  baseURL: 'http://localhost:9090', 
   headers: {
     'Content-Type': 'application/json',
   },
