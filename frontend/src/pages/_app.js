@@ -1,6 +1,7 @@
-import "@/styles/globals.css";
 import { Provider } from "react-redux";
-import store from "@/config/redux/store";
+import '../styles/globals.css';
+import store from '../config/redux/store';
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 

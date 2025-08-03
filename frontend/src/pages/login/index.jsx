@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import { loginUser, registerUser } from "@/config/redux/action/authAction";
+import { loginUser, registerUser } from "../../config/redux/action/authAction/index";
 import styles from "./style.module.css";
 import UserLayout from "@/layout/userLayout";
 import Head from "next/head";

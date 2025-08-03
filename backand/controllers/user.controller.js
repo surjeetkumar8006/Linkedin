@@ -438,3 +438,28 @@ export const acceptConnectionRequest = async (req, res) => {
   }
 };
 
+
+export const getProfileById = async (req, res) => {
+  const { token, user_id } = req.body;
+
+  try {
+    const user = await User.findOne({ token });
+    if (!user) return res.status(401).json({ message: "Invalid token" });
+
+    const targetUser = await User.findById(user_id).select("name email username");
+    const profile = await Profile.findOne({ userId: user_id });
+
+    if (!targetUser) return res.status(404).json({ message: "User not found" });
+
+    return res.status(200).json({
+      user: {
+        ...targetUser.toObject(),
+        bio: profile?.bio || '',
+        currentPost: profile?.currentPost || '',
+      },
+    });
+  } catch (err) {
+    console.error("Get profile by ID error:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};

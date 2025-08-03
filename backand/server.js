@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 import postRoute from "./routes/posts.routes.js"; 
 import userRoutes from "./routes/users.routes.js";
 import helmet from "helmet";
+import "./config/passport.config.js"; // passport strategy config
 
 dotenv.config();
 const app = express();
@@ -22,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS Middleware
 app.use(cors({
-  origin: "*", // You can replace "*" with the specific domain(s) if needed
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
@@ -50,19 +51,19 @@ mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+.then(() => console.log("✅ MongoDB Connected"))
+.catch((err) => console.error("❌ MongoDB Error:", err));
 
 // Routes
-app.use(postRoute);
-app.use(userRoutes);
+app.use("/api/posts", postRoute);
+app.use("/api/users", userRoutes);
 
 // Welcome Route
 app.get("/", (req, res) => {
   res.send("🚀 Server is running");
 });
 
-// Error Handling Middleware
+// Error Handling
 app.use((err, req, res, next) => {
   console.error("Unexpected Error:", err);
   res.status(500).json({ message: "Something went wrong", error: err.message });

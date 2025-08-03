@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import clientServer from '@/config/axios'; // Correct import for axios
+import clientServer from '../../../axios.js'; // Correct import for axios
 
 // ----------------- LOGIN -----------------
 export const loginUser = createAsyncThunk(
@@ -8,7 +8,7 @@ export const loginUser = createAsyncThunk(
     try {
       console.log("Sending login data", { email: user.email, password: user.password });
 
-      const response = await clientServer.post('/login', {
+      const response = await clientServer.post('/users/login', {
         email: user.email,
         password: user.password,
       });
@@ -41,7 +41,7 @@ export const registerUser = createAsyncThunk(
   '/register',
   async (user, thunkAPI) => {
     try {
-      const response = await clientServer.post('/register', {
+      const response = await clientServer.post('/users/register', {
         name: user.fullName,
         email: user.email,
         password: user.password,

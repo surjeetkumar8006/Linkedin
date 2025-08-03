@@ -39,12 +39,13 @@ const postsSlice = createSlice({
         state.isError = false;
         state.message = '';
       })
-      .addCase(getAllPosts.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.posts = action.payload;
-        state.postFetched = true;
-        state.isError = false;
-      })
+     .addCase(getAllPosts.fulfilled, (state, action) => {
+  state.isLoading = false;
+  state.posts = action.payload; // ✅ array of posts
+  state.postFetched = true;
+  state.isError = false;
+})
+
       .addCase(getAllPosts.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;

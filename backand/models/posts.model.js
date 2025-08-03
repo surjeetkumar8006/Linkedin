@@ -10,10 +10,10 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  like: {
-    type: Number,
-    default: 0,
-  },
+  likes: [{ // Array of user IDs who liked the post
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  }],
   createdAt: {
     type: Date,
     default: Date.now,
@@ -36,6 +36,6 @@ const postSchema = new mongoose.Schema({
   }
 });
 
+// Export the Post model
 const Post = mongoose.model("Post", postSchema);
-
 export default Post;

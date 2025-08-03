@@ -12,6 +12,7 @@ import {
   getMyConnectionRequest,
   whatAreMyConnections,
   acceptConnectionRequest,
+  getProfileById
 } from "../controllers/user.controller.js";
 import multer from "multer";
 const router = express.Router();
@@ -40,5 +41,7 @@ router.post("/user/send_connection_request", sendConnectionRequest);
 router.get("/user/get_connection_request", getMyConnectionRequest);
 router.get("/user/what_are_my_connections", whatAreMyConnections);
 router.post("/user/accept_connection_request", acceptConnectionRequest);
+
+router.route("/get_profile_by_id").post(getProfileById);
 
 export default router;
