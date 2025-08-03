@@ -42,9 +42,14 @@ This is a mini LinkedIn-like community platform built for the Full Stack Develop
 - ✅ Public Post Feed (with timestamps and author names)
 - ✅ Individual User Profile Pages (with their posts)
 - ✅ Fully Responsive UI
+<img width="1892" height="835" alt="image" src="https://github.com/user-attachments/assets/6a09921e-7c09-4249-a485-3318c3cfe04e" />
 
 ---
 <img width="1843" height="767" alt="image" src="https://github.com/user-attachments/assets/52d2729d-da84-4a2c-b0e9-84cb266c717f" />
+
+
+<img width="1555" height="877" alt="image" src="https://github.com/user-attachments/assets/c4042d26-593f-49c9-9d3b-4eb9c7e685f8" />
+
 
 
 ## ⚙️ Local Setup Instructions
