@@ -8,7 +8,7 @@ export const loginUser = createAsyncThunk(
     try {
       console.log("Sending login data", { email: user.email, password: user.password });
 
-      const response = await clientServer.post('/users/login', {
+      const response = await clientServer.post('/api/users/login', {
         email: user.email,
         password: user.password,
       });
@@ -41,7 +41,7 @@ export const registerUser = createAsyncThunk(
   '/register',
   async (user, thunkAPI) => {
     try {
-      const response = await clientServer.post('/users/register', {
+      const response = await clientServer.post('/api/users/register', {
         name: user.fullName,
         email: user.email,
         password: user.password,
@@ -80,7 +80,7 @@ export const getUserProfile = createAsyncThunk(
       }
 
       // Pass token as a query parameter
-      const response = await clientServer.get("user/get_all_user_profile");
+      const response = await clientServer.get("/api/user/get_all_user_profile");
 
       return response.data;
     } catch (error) {

@@ -7,7 +7,7 @@ export const getAllPosts = createAsyncThunk(
     try {
       // Since baseURL is '/api', to get 'http://localhost:8080/api/posts/posts',
       // you need to request '/posts/posts'
-      const response = await clientServer.get('/posts/posts');
+      const response = await clientServer.get('/api/posts/posts');
 
       // Return only posts array
       return thunkAPI.fulfillWithValue(response.data.posts);
