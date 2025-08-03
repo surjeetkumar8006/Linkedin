@@ -9,7 +9,7 @@ import cookieParser from "cookie-parser";
 import postRoute from "./routes/posts.routes.js"; 
 import userRoutes from "./routes/users.routes.js";
 import helmet from "helmet";
-import "./config/passport.config.js"; // passport strategy config
+import "./config/passport.config.js";
 
 dotenv.config();
 const app = express();
@@ -21,11 +21,14 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS Middleware
+// CORS Middleware with specific origin & credentials
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000"; // Change this to your frontend URL
+
 app.use(cors({
-  origin: "*",
+  origin: FRONTEND_URL,     // restrict to frontend url
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true          // important for cookies/session sharing
 }));
 
 // Other middlewares
@@ -33,12 +36,16 @@ app.use(methodOverride("_method"));
 app.use(cookieParser());
 app.use(express.static("uploads"));
 
-// Session setup
+// Session setup with secure cookies in production
 app.use(session({
   secret: process.env.SESSION_SECRET || "supersecretkey",
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 24 },
+  cookie: { 
+    maxAge: 1000 * 60 * 60 * 24,
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",  // For cross-site cookie handling
+    secure: process.env.NODE_ENV === "production",                     // Only send cookie over HTTPS in production
+  },
 }));
 
 // Passport.js setup
@@ -47,6 +54,7 @@ app.use(passport.session());
 
 // MongoDB Connection
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/Linkedin";
+
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
